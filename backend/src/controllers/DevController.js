@@ -2,12 +2,6 @@ const axios = require('axios');
 const Dev = require('../models/Dev');
 const parseStringAsArray = require('../utils/parseStringAsArray');
 
-// index = Quando se quer mostrar uma lista do recurso 'DevController'.
-// show = Quando quer que seja mostrado um único recurso. Ex: desenvolvedor(a).
-// store = Quando quer que seja criado um recursos.
-// update = Quando quer alterar algum recurso.
-// destroy = Quando se quer deletar algum recursos.
-
 module.exports = {
   async index (request, response) {
     const devs = await Dev.find();
@@ -23,7 +17,7 @@ module.exports = {
     if (!dev) {
       const apiResponse = await axios.get(`https://api.github.com/users/${github_username}`);
   
-      const { name = login,  avatar_url, bio } = apiResponse.data;
+      const { name = login, avatar_url, bio } = apiResponse.data;
     
       const techsArray = parseStringAsArray(techs);
     
@@ -39,7 +33,7 @@ module.exports = {
           bio,
           techs: techsArray,
           location,
-      })
+      });
     }
 
     return response.json(dev);
